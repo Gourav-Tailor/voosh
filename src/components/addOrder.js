@@ -1,11 +1,10 @@
 import React,{useCallback,useState} from "react";
 
-const AddOrder = () => {
+const AddOrder = ({orders, setOrders}) => {
     const [newOrder, setNewOrder] = useState();
     const [phone, setPhone] = useState();
 
     const addOrders = useCallback(async ()=>{
-      console.log(localStorage.getItem('token'))
       try {
         const response = await fetch("https://voosh-backend-test.onrender.com/add-order", {
           method: 'POST',
@@ -17,6 +16,9 @@ const AddOrder = () => {
         });
     
         const data = await response.json();
+        if(response.ok){
+          setOrders([...orders,{subTotal:newOrder,phoneNumber:phone}]);
+        }
         return data;
       } catch (error) {
         console.error(error);

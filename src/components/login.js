@@ -22,7 +22,7 @@ const LoginPage = ({signup, handleLogin}) => {
         console.error(error);
         throw error;
       }
-    },[]);
+    },[password,phone]);
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
@@ -35,8 +35,9 @@ const LoginPage = ({signup, handleLogin}) => {
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               id="username"
-              type="text"
-              placeholder="Enter your username"
+              type="number"
+              placeholder="Enter your Phone Number"
+              value={phone}
               onChange={e => setPhone(e.target.value)}
             />
           </div>
@@ -49,6 +50,7 @@ const LoginPage = ({signup, handleLogin}) => {
               id="password"
               type="password"
               placeholder="********"
+              value={password}
               onChange={e => setPassword(e.target.value)}
             />
           </div>

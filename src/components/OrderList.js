@@ -7,7 +7,6 @@ const OrderList = () => {
     useEffect(() => {
       const fetchData = async () => {
         try {
-          console.log(localStorage.getItem('token'));
     
           const response = await fetch("https://voosh-backend-test.onrender.com/get-order", {
             method: 'GET',
@@ -32,9 +31,9 @@ const OrderList = () => {
     <>
     <div className="bg-white shadow-md rounded px-8 py-6">
       <h2 className="text-2xl font-bold mb-4">Order List</h2>
-      <AddOrder />
-      {orders.map((order) => (
-        <div key={order.userId} className="flex items-center justify-between mb-2">
+      <AddOrder orders={orders} setOrders={setOrders} />
+      {orders.map((order,index) => (
+        <div key={index} className="flex items-center justify-between mb-2">
           <div className="flex items-center">
             <span className="text-gray-500 mr-8">${order.subTotal}</span>
             <span className="font-bold">{order.phoneNumber}</span>

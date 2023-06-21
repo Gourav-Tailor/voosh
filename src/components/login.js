@@ -4,19 +4,22 @@ const LoginPage = ({signup, handleLogin}) => {
     const [phone,setPhone] = useState();
     const [password,setPassword] = useState();
 
-    const signingUp = useCallback(()=>{
-        fetch("https://voosh-backend-test.onrender.com/login-user",{
+    const signingUp = useCallback(async ()=>{
+      try{
+        const response = await fetch("https://voosh-backend-test.onrender.com/login-user",{
             method: 'POST',
             body: JSON.stringify({phone_number: phone, password: password, login_by: "Google"}),
             headers: {
                 'Content-type': 'application/json; charset=UTF-8',
             }
         })
-        .then(x=>x.json())
-        .then(data => {
-            document.cookie = data.token;
-            handleLogin();
-        })
+        const data = await response.json();
+        localStorage.setItem('token', data.token);
+        handleLogin();
+      } catch(error) {
+        console.error(error);
+        throw error;
+      }
     },[]);
 
   return (

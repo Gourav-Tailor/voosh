@@ -14,8 +14,10 @@ const LoginPage = ({signup, handleLogin}) => {
             }
         })
         const data = await response.json();
-        localStorage.setItem('token', data.token);
-        handleLogin();
+        if(response.ok){
+          localStorage.setItem('token', data.token);
+          handleLogin();
+        }
       } catch(error) {
         console.error(error);
         throw error;

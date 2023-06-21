@@ -4,12 +4,28 @@ const OrderList = () => {
   const [newOrder, setNewOrder] = useState();
   const [orders, setOrders] = useState([]);
 
-  useEffect(()=>{
-    fetch("http://localhost:3001/get-user",{
+  
+  const addOrders = useCallback(()=>{
+    fetch("https://voosh-backend-test.onrender.com/add-order",{
         method: 'POST',
+        body: JSON.stringify({user_id: "", sub_total: newOrder, phone_number: 0}),
+        headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+            'authorization': document.cookie,
+        }
+    })
+    .then(x=>x.json())
+    .then(data => {
+    })
+  },[newOrder]);
+
+  useEffect(()=>{
+    fetch("https://voosh-backend-test.onrender.com/get-user",{
+        method: 'GET',
         body: JSON.stringify({userId: "1234"}),
         headers: {
             'Content-type': 'application/json; charset=UTF-8',
+            'authorization': document.cookie,
         }
     })
     .then(x=>x.json())
@@ -18,8 +34,8 @@ const OrderList = () => {
     })
   },[]);
 
-
   return (
+    <>
     <div className="bg-white shadow-md rounded px-8 py-6">
       <h2 className="text-2xl font-bold mb-4">Order List</h2>
       <div className="mb-4">
@@ -27,12 +43,11 @@ const OrderList = () => {
           className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           type="text"
           placeholder="Enter a new order"
-          value={newOrder}
           onChange={(e) => setNewOrder(e.target.value)}
         />
         <button
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 ml-2 rounded focus:outline-none focus:shadow-outline"
-      
+          onClick={()=>addOrders()}
         >
           Add Order
         </button>
@@ -46,7 +61,8 @@ const OrderList = () => {
         </div>
       ))}
     </div>
+    </>
   );
-};
+}
 
 export default OrderList;

@@ -5,7 +5,7 @@ const LoginPage = ({signup, handleLogin}) => {
     const [password,setPassword] = useState();
 
     const signingUp = useCallback(()=>{
-        fetch("http://localhost:3001/login-user",{
+        fetch("https://voosh-backend-test.onrender.com/login-user",{
             method: 'POST',
             body: JSON.stringify({phone_number: phone, password: password, login_by: "Google"}),
             headers: {
